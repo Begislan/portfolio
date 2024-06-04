@@ -1,6 +1,13 @@
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
-        <div style="width: 50px; height: 50px; background: url('{{ user.photo.url}}'); background-size: cover;"></div>
+        {% if user.photo %}
+            <div style="width: 50px; height: 50px; background: url('{{ user.photo.url }}'); background-size: cover;"></div>
+        {% else %}
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: url('https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg'); background-size: cover">
+
+                </div>
+        {% endif %}
+
         <div>
             {{ user.phone }}
         </div>
@@ -13,7 +20,8 @@
 
         <ul class="nav nav-pills">
             {% for menu in portfolios %}
-                <li class="nav-item"><a href="/user/{{ user.username }}/?change_page={{ menu.id }}" class="nav-link">{{ menu.menu }}</a></li>
+                <li class="nav-item"><a href="/user/{{ user.username }}/?change_page={{ menu.id }}"
+                                        class="nav-link">{{ menu.menu }}</a></li>
             {% endfor %}
         </ul>
     </header>
