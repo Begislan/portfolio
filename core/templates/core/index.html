@@ -1,9 +1,22 @@
 {% extends 'core/base.html' %}
 
-
 {% block content %}
 
 <div class="container">
+
+     {% if user.is_authenticated %}
+        {{ user.username }}
+         <a href="{% url 'admin_core' %}">В админку</a>
+         <a href="{% url 'logout' %}">Выход</a>
+    {% else %}
+    <div style="display: flex; align-items: center; margin-top: 15px">
+                <p>
+                    Платформа портфолию /
+                    Чтобы воспользоватся порфолиом <span><a href="{% url 'login' %}">Входите</a></span> или <span><a href="{% url 'signup' %}">Зарегистрируйтес</a></span>
+                </p>
+
+            </div>
+    {% endif %}
     <h1>{{ user.last_name }} {{ user.first_name }}</h1>
 </div>
 

@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts',
 
     'ckeditor',
     'ckeditor_uploader',  # Для поддержки загрузки файлов
@@ -46,7 +47,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -152,3 +153,6 @@ CKEDITOR_CONFIGS = {
     },
 
 }
+
+
+LOGIN_REDIRECT_URL = 'core'

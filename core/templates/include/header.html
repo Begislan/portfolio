@@ -1,17 +1,27 @@
 <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+        {% if user.photo %}
+            <div style="width: 50px; height: 50px; background: url('{{ user.photo.url }}'); background-size: cover;"></div>
+        {% else %}
+                <div style="width: 50px; height: 50px; border-radius: 50%; background: url('https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg'); background-size: cover">
+
+                </div>
+        {% endif %}
+
+        <div>
+
+        </div>
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <svg class="bi me-2" width="40" height="32">
                 <use xlink:href="#bootstrap"></use>
             </svg>
-            {% if request.user.is_authenticated %}
-            <span class="fs-4">{{ request.user.last_name }} {{ request.user.first_name }}</span>
-            {% endif %}
+            <span class="fs-4">{{ user.last_name }} {{ user.first_name }} {{ user.phone }}</span>
         </a>
 
         <ul class="nav nav-pills">
             {% for menu in portfolios %}
-                <li class="nav-item"><a href="#" class="nav-link">{{ menu.menu }}</a></li>
+                <li class="nav-item"><a href="/user/{{ user.username }}/?change_page={{ menu.id }}"
+                                        class="nav-link">{{ menu.menu }}</a></li>
             {% endfor %}
         </ul>
     </header>
