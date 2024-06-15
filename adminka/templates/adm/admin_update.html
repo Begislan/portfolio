@@ -1,10 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'adm/base_admin.html' %}
 
-</body>
-</html>
+{% block title %}Изменит меню{% endblock %}
+
+{% block content %}
+    <section class="p-4">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Изменить</button>
+    </form>
+    </section>
+{% endblock %}

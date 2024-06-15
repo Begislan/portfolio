@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
-from .models import Portfolio
+from .models import Portfolio, CustomUser
+
 
 # Create your views here.
 def core(request):
     return render(request, 'core/index.html')
 
 def user(request, username):
-    portfolios = Portfolio.objects.filter(user__username=username)
+    portfolios = Portfolio.objects.filter(user__username=username, active=True)
     user = []
     if portfolios.exists():
         user = portfolios[0].user
@@ -25,3 +26,9 @@ def user(request, username):
         'change_page': change_page
     }
     return render(request, 'core/user.html', context)
+
+
+def list_portfolios(request):
+    port = Portfolio.objects.all()
+    return render(request, 'core/list_portfolios.html', {'port': port})
+

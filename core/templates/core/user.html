@@ -1,17 +1,63 @@
 {% extends 'core/base.html' %}
 
+{% block title %}{{ user.last_name }} {{ user.first_name }}{% endblock %}
+
 
 {% block content %}
 
-<div class="container">
-    <h1>{{ user.last_name }} {{ user.first_name }}</h1>
+    <div class="container">
 
-    <section class="p-5 w-100 h-100 vh-100" style="background: url('{{ change_page.background.url }}'); background-position: center center; background-size: cover"></section>
+        {% if change_page.background %}
+            <div class="container my-5">
+                <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+                    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ change_page.menu }}</h1>
+                        <p class="lead">{{ user.first_name }}</p>
 
-    <div class="container p-5">
-        {{ change_page.content|safe }}
+                    </div>
+                    <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+
+                        {% if user.photo %}
+                            <img class="rounded-lg-3"
+                                 src="{{ user.photo.url }}"
+                                 alt="" width="520">
+                        {% else %}
+                            <img class="rounded-lg-3"
+                                 src="https://img.myloview.com/stickers/user-icon-vector-people-icon-profile-vector-icon-person-illustration-business-user-icon-users-group-symbol-male-user-symbol-700-223068883.jpg"
+                                 alt="" width="520">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+        {% else %}
+            <div class="container my-5">
+                <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+                    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+                        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ change_page.menu }}</h1>
+                        <p class="lead">{{ user.first_name }}</p>
+
+                    </div>
+                    <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+
+                        {% if user.photo %}
+                            <img class="rounded-lg-3"
+                                 src="{{ user.photo.url }}"
+                                 alt="" width="520">
+                        {% else %}
+                            <img class="rounded-lg-3"
+                                 src="https://img.myloview.com/stickers/user-icon-vector-people-icon-profile-vector-icon-person-illustration-business-user-icon-users-group-symbol-male-user-symbol-700-223068883.jpg"
+                                 alt="" width="520">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="container p-5 border" style="background-color: rgba(255, 255, 255, 0.5);">
+            {{ change_page.content|safe }}
+        </div>
     </div>
-</div>
 
 
 

@@ -1,10 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'adm/base_admin.html' %}
 
-</body>
-</html>
+{% block title %}Удаление меню{% endblock %}
+
+{% block content %}
+    <section class="p-4">
+    <h2>Удалить Портфолио</h2>
+    <p>Вы уверены, что хотите удалить портфолио "{{ portfolio.menu }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Удалить</button>
+        <a href="{% url 'admin_core' %}">Отмена</a>
+    </form>
+    </section>
+{% endblock %}

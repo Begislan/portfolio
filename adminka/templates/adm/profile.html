@@ -1,0 +1,31 @@
+{% extends 'adm/base_admin.html' %}
+
+{% block title %}Профиль {{ user.username }}{% endblock %}
+
+{% block content %}
+<div class="profile p-3">
+    <h1>Профиль пользователя: {{ user.username }}</h1>
+
+    <div class="user-info">
+        <p><strong>Имя:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>Электронная почта:</strong> {{ user.email }}</p>
+    </div>
+
+    <h2>Портфолио</h2>
+    {% if portfolio %}
+        <ul>
+            {% for item in portfolio %}
+                <li>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.description }}</p>
+                    <p><strong>Дата создания:</strong> {{ item.created_at }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Портфолио пусто.</p>
+    {% endif %}
+    <a class="btn btn-info" href="{% url 'update_profile' %}">Изменить профиль</a>
+    <a class="btn btn-success" href="{% url 'change_password' %}">Изменить пароль</a>
+</div>
+{% endblock %}

@@ -1,10 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'adm/base_admin.html' %}
 
-</body>
-</html>
+{% block title %}{{ detail_data.menu }}{% endblock %}
+
+{% block content %}
+<div class="content p-3">
+    <p>Пользователь: {{ detail_data.user }}</p>
+    <p>Меню: {{ detail_data.menu }}</p>
+    {% if detail_data.background %}
+    <p>Фон страницы: <img src="{{ detail_data.background.url }}" alt="" width="100px"></p>
+    {% else %}
+        <p>фон отсуствует</p>
+    {% endif %}
+    <p>Статус: {{ detail_data.active}}</p>
+    <p>дата создание: {{ detail_data.create_date}}</p>
+    <p>дата обновление: {{ detail_data.update_date}}</p>
+    <p>весь контент</p>
+{{ detail_data.content|safe }}
+</div>
+
+{% endblock %}

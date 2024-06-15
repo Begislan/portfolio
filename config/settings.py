@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',  # Для поддержки загрузки файлов
     'phonenumber_field',
     'core',
+    'adminka',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +48,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,6 +115,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -126,7 +129,11 @@ CKEDITOR_CONFIGS = {
         'height': 300,
         'width': 900,
         'simpleUpload': {
-            'uploadUrl': '/upload/'  # URL для загрузки изображений и файлов
+            'uploadUrl': '/upload/',  # URL для загрузки изображений и файлов
+            'headers': {
+                'X-CSRF-TOKEN': 'your-csrf-token',  # добавьте если требуется CSRF токен
+                # другие заголовки если нужны
+            }
         },
         'stylesSet': [
             # Вставьте сюда свои стили CKEditor 5, например:
