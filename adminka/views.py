@@ -111,7 +111,7 @@ def update_profile(request):
     user = request.user
     portfolio = Portfolio.objects.filter(user=user)
     if request.method == 'POST':
-        form = UserUpdateForm(request.POST, instance=request.user)
+        form = UserUpdateForm(request.POST,request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect('profile')

@@ -8,11 +8,11 @@
     <div class="container">
 
         {% if change_page.background %}
-            <div class="container my-5">
-                <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+            <div class="container my-3">
+                <div class="row p-4 pb-0 pe-lg-0 pt-lg-0 align-items-center rounded-3 border shadow-lg">
                     <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
                         <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ change_page.menu }}</h1>
-                        <p class="lead">{{ user.first_name }}</p>
+
 
                     </div>
                     <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
@@ -31,11 +31,11 @@
             </div>
 
         {% else %}
-            <div class="container my-5">
-                <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+            <div class="container my-3">
+                <div class="row p-4 pb-0 pe-lg-0 pt-lg-0 align-items-center rounded-3 border shadow-lg">
                     <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
                         <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ change_page.menu }}</h1>
-                        <p class="lead">{{ user.first_name }}</p>
+                        
 
                     </div>
                     <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
@@ -43,11 +43,11 @@
                         {% if user.photo %}
                             <img class="rounded-lg-3"
                                  src="{{ user.photo.url }}"
-                                 alt="" width="520">
+                                 alt="" width="400">
                         {% else %}
                             <img class="rounded-lg-3"
                                  src="https://img.myloview.com/stickers/user-icon-vector-people-icon-profile-vector-icon-person-illustration-business-user-icon-users-group-symbol-male-user-symbol-700-223068883.jpg"
-                                 alt="" width="520">
+                                 alt="" width="400">
                         {% endif %}
                     </div>
                 </div>
@@ -56,6 +56,7 @@
 
         <div class="container p-5 border" style="background-color: rgba(255, 255, 255, 0.5);">
             {{ change_page.content|safe }}
+            <p>Дата создание: {{ change_page.create_date }}</p>
         </div>
     </div>
 

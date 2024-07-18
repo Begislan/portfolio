@@ -6,7 +6,7 @@
 background-size: cover;
 background-position: center">
         {% if user.photo %}
-            <div style="width: 50px; height: 50px; background: url('{{ user.photo.url }}'); background-size: cover; margin-left: 15px;"></div>
+            <div style="border-radius: 50%; width: 50px; height: 50px; background: url('{{ user.photo.url }}'); background-size: cover; margin-left: 15px;"></div>
         {% else %}
             <div style="width: 50px; height: 50px; border-radius: 50%;
             background: url('https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg');
@@ -22,7 +22,7 @@ background-position: center">
             {% for menu in portfolios %}
                 <a class="fs-4 text-decoration-none me-2" href="/user/{{ user.username }}/?change_page={{ menu.id }}">
                     <li style="display: flex; align-items: center; min-height: 100%"
-                        class="nav-item text-light">{{ menu.menu }}</li>
+                        class="nav-item text-light pe-2">{{ menu.menu }}</li>
                 </a>
             {% endfor %}
         </ul>

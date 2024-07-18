@@ -12,7 +12,7 @@ def user(request, username):
     if portfolios.exists():
         user = portfolios[0].user
     else:
-        return redirect('index')
+        return redirect('core')
     change_page = request.GET.get('change_page')
     if change_page:
         change_page = portfolios.get(id=change_page)
@@ -30,5 +30,15 @@ def user(request, username):
 
 def list_portfolios(request):
     port = Portfolio.objects.all()
-    return render(request, 'core/list_portfolios.html', {'port': port})
+    context = {
+        'port': port,
+    }
+    return render(request, 'core/list_portfolios.html', context)
+
+
+def delete_user(request, username):
+    portfolios = Portfolio.objects.filter(user__username=username)
+    if portfolios.exists():
+        portfolios.delete()
+        return redirect('list_portfolios')
 

@@ -25,12 +25,19 @@
         </form>
     </div>
     <ul class="list-group list-group-flush">
-        {% for i in port %}
-            <a href="user/{{ i.user.username }}">
-                <li class="list-group-item">{{ i.user.first_name }}</li>
-            </a>
+            {% for i in port %}
+            <li class="list-group-item">
+                <a href="user/{{ i.user.username }}">
+                    {{ i.user.last_name }}
+                    {{ i.user.first_name }}
+                    <span class="text-success">{{ i.user.username }}</span>
+                </a>
+                {% if user.is_superuser %}
+                    <a class="text-danger" href="{% url 'delete_user' i.user.username %}"> удалить пользователья</a>
+                {% endif %}</li>
         {% endfor %}
     </ul>
+
 
 </div>
 
