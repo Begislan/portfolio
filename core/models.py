@@ -20,7 +20,7 @@ import sys
 class CustomUser(AbstractUser):
     photo = models.ImageField(upload_to='user_photos/', verbose_name='Фото пользователя', blank=True, null=True)
     email = models.EmailField()
-    ost_name = models.CharField(max_length=255, verbose_name='отечество', default="без отечество")
+    ost_name = models.CharField(max_length=255, verbose_name='отечество', blank=True, null=True)
     phone = PhoneNumberField(verbose_name='Телефонный номер', blank=True, null=True, help_text="Введите номер телефона в формате: +123456789")
 
     def save(self, *args, **kwargs):

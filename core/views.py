@@ -18,8 +18,6 @@ def user(request, username):
         change_page = portfolios.get(id=change_page)
     else:
         change_page = portfolios.first()
-
-    print(username,portfolios)
     context = {
         'user': user,
         'portfolios': portfolios,

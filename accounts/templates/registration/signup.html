@@ -18,9 +18,12 @@
 </style>
 
 <div class="container">
+
     <div class="row justify-content-center">
 
-        <form class="col-md-5  col-12" action="" method="post" enctype="multipart/form-data">
+        <form class="col-md-9  col-12" action="" method="post" enctype="multipart/form-data">
+            <h4>Регистрация</h4>
+            <a href="{% url 'core' %}">На главную</a>
             {% csrf_token %}
 
             {% if form.errors %}
@@ -38,74 +41,84 @@
                 </div>
             {% endif %}
 
+
             <div class="form-floating">
                 <input type="text" name='username' class="form-control" id="floatingInput"
                        placeholder="name@example.com">
-                    <small id="phoneHelp" class="form-text text-muted">Введите имя пользователя в формате "myname"</small>
+                <small id="phoneHelp" class="form-text text-muted">Введите имя пользователя в формате
+                    "myname"</small>
                 <label for="floatingInput">Имя пользователя</label>
             </div>
+            <div class="row">
+                <div class="col">
 
-            <div class="form-floating">
-                <input type="text" name='first_name' class="form-control" id="floatingInput"
-                       placeholder="name@example.com">
-                <label for="floatingInput">Имя</label>
+
+                    <div class="form-floating">
+                        <input type="text" name='last_name' class="form-control" id="floatingInput"
+                               placeholder="name@example.com">
+                        <label for="floatingInput">Фамилия</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" name='email' class="form-control" id="floatingInput"
+                               placeholder="name@example.com">
+                        <label for="floatingInput">Email</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="file" name='photo' class="form-control" id="floatingInput"
+                               placeholder="name@example.com">
+                        <small id="phoneHelp" class="form-text text-muted">Выберите фото в формате .jpeg или
+                            .jpg</small>
+                        <label for="floatingInput">Фото ползователя</label>
+                    </div>
+
+
+                    <div class="form-floating">
+                        <input type="password" name='password1' class="form-control" id="floatingInput"
+                               placeholder="name@example.com">
+                        <label for="floatingInput">Пароль</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <button class="btn btn-primary w-100 py-2" type="submit">Регистрация</button>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="text" name='first_name' class="form-control" id="floatingInput"
+                               placeholder="name@example.com">
+                        <label for="floatingInput">Имя</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" name='ost_name' class="form-control" id="floatingInput"
+                               placeholder="name@example.com">
+                        <label for="floatingInput">Отечество</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="text" name='phone' class="form-control" id="floatingInput"
+                               placeholder="name@example.com" value="+996">
+                        <small id="phoneHelp" class="form-text text-muted">Введите номер телефона в формате:
+                            +123456789.</small>
+                        <label for="floatingInput">Телефон</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <input type="password" name='password2' class="form-control" id="floatingInput"
+                               placeholder="name@example.com">
+                        <label for="floatingInput">Повторите пароль</label>
+                    </div>
+
+                    <div class="form-floating">
+                        <a href="{% url 'login' %}" class="btn btn-success w-100 py-2">Вход</a>
+                    </div>
+
+                </div>
             </div>
-
-            <div class="form-floating">
-                <input type="text" name='last_name' class="form-control" id="floatingInput"
-                       placeholder="name@example.com">
-                <label for="floatingInput">Фамилия</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="text" name='ost_name' class="form-control" id="floatingInput"
-                       placeholder="name@example.com">
-                <label for="floatingInput">Отечество</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="text" name='email' class="form-control" id="floatingInput"
-                       placeholder="name@example.com">
-                <label for="floatingInput">Email</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="text" name='phone' class="form-control" id="floatingInput"
-                       placeholder="name@example.com" value="+996">
-                <small id="phoneHelp" class="form-text text-muted">Введите номер телефона в формате: +123456789.</small>
-                <label for="floatingInput">Телефон</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="file" name='photo' class="form-control" id="floatingInput"
-                       placeholder="name@example.com">
-                <small id="phoneHelp" class="form-text text-muted">Выберите фото в формате .jpeg или .jpg</small>
-                <label for="floatingInput">Фото ползователя</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="password" name='password1' class="form-control" id="floatingInput"
-                       placeholder="name@example.com">
-                <label for="floatingInput">Пароль</label>
-            </div>
-
-            <div class="form-floating">
-                <input type="password" name='password2' class="form-control" id="floatingInput"
-                       placeholder="name@example.com">
-                <label for="floatingInput">Повторите пароль</label>
-            </div>
-
-            <div class="form-floating">
-                <button class="btn btn-primary w-100 py-2" type="submit">Регистрация</button>
-            </div>
-
-            <div class="form-floating">
-                <a href="{% url 'login' %}" class="btn btn-success w-100 py-2">Вход</a>
-
-            </div>
-
         </form>
-
     </div>
 </div>
 

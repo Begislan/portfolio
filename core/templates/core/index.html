@@ -21,7 +21,7 @@
         <div class="container my-5">
             <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
                 <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                    <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ user.last_name }} {{ user.first_name }} {{ user.ost_name }}</h1>
+                    <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ user.last_name }} {{ user.first_name }} {% if user.ost_name %}{{ user.ost_name }}{% endif %}</h1>
                     <p class="lead">Информация о пользователя</p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
 
@@ -42,9 +42,9 @@
                 </div>
                 <div class="col-lg-3 offset-lg-1 p-0  shadow-lg">
                     {% if user.photo %}
-                        <img class="rounded-lg-3" src="{{ user.photo.url }}" alt="" width="300">
+                        <img  class="rounded-lg-3" src="{{ user.photo.url }}" alt="" width="300" style="object-fit: cover;">
                     {% else %}
-                        <img class="rounded-lg-3"
+                        <img class="rounded-lg-3" style="object-fit: cover;"
                              src="https://img.myloview.com/stickers/user-icon-vector-people-icon-profile-vector-icon-person-illustration-business-user-icon-users-group-symbol-male-user-symbol-700-223068883.jpg"
                              alt="" width="300">
                     {% endif %}
@@ -61,9 +61,9 @@
                          loading="lazy">
                 </div>
                 <div class="col-lg-6">
-                    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Добро пожваловать в платформу
-                        портфолио</h1>
-                    <p class="lead">В этом платформе можете создавать свой портфолио или посмотреть другие</p>
+                    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Добро пожаловать в платформу
+                       онлайн портфолио</h1>
+                    <p class="lead">На этой платформе вы можете создать своё портфолио или просматривать портфолио других пользователей.</p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
                         <a class="lead text-decoration-none fw-bolder text-success"  href="{% url 'login' %}">
                             |Вход|
