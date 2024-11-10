@@ -2,3 +2,4 @@ port_venv
 .venv
 .idea
 media
+static

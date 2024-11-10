@@ -15,7 +15,7 @@
         </div>
         <div class="col">
             {% if user.photo %}
-            <img style="border-radius: 20px" class="shadow-lg" src="{{ user.photo.url }}" alt="">
+            <img style="border-radius: 20px; object-fit: cover;" class="shadow-lg" src="{{ user.photo.url }}" alt="">
             {% else %}
             фото нет
             {% endif %}

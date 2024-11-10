@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Portfolio, CustomUser
-
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def core(request):
@@ -25,11 +26,16 @@ def user(request, username):
     }
     return render(request, 'core/user.html', context)
 
-
+@login_required
 def list_portfolios(request):
     port = Portfolio.objects.all()
+    paginator = Paginator(port, 10)  # Show 10 portfolios per page
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        'port': port,
+        'page_obj': page_obj,
     }
     return render(request, 'core/list_portfolios.html', context)
 

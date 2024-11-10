@@ -11,9 +11,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-y$bl)nl%(z@$f%en!mjx_l#r)=6xp5p51cufy=dy^gt1a(cw12'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['begiportfolio.pythonanywhere.com', "*"]
 
 # Application definition
 
@@ -106,14 +106,19 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-
+# Путь для статических файлов
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 AUTH_USER_MODEL = 'core.CustomUser'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# Путь для медиа-файлов
+MEDIA_URL = '/home/begiportfolio/portfolio/media/'
+MEDIA_ROOT = '/home/begiportfolio/portfolio/media'
 
 
 

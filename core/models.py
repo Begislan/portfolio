@@ -29,19 +29,46 @@ class CustomUser(AbstractUser):
             img = Image.open(self.photo)
             output = BytesIO()
 
-            # Изменяем размер изображения (вы можете изменить размер)
-            img = img.resize((300, 300), Image.LANCZOS)
+            # Получаем текущие размеры изображения
+            original_width, original_height = img.size
 
-            # Сохраняем измененное изображение в output
-            img.save(output, format='JPEG', quality=85)
+            # Проверяем формат изображения (PNG или JPEG)
+            image_format = img.format
+
+            # Если изображение превышает 300x300, изменяем его размер
+            if original_width > 300 or original_height > 300:
+                # Сохраняем пропорции изображения
+                aspect_ratio = original_width / original_height
+
+                if original_width > original_height:
+                    new_width = 300
+                    new_height = int(new_width / aspect_ratio)
+                else:
+                    new_height = 300
+                    new_width = int(new_height * aspect_ratio)
+
+                # Изменяем размер изображения
+                img = img.resize((new_width, new_height), Image.LANCZOS)
+
+            # Проверяем, если изображение в формате PNG, и оно содержит альфа-канал (прозрачность)
+            if image_format == 'PNG' and img.mode in ('RGBA', 'LA'):
+                img = img.convert('RGBA')  # Сохраняем альфа-канал
+                img.save(output, format='PNG')  # Сохраняем как PNG
+                mime_type = 'image/png'
+            else:
+                # Конвертируем все остальные форматы в RGB для сохранения в JPEG
+                img = img.convert('RGB')
+                img.save(output, format='JPEG', quality=85)
+                mime_type = 'image/jpeg'
+
             output.seek(0)
 
             # Меняем значение поля photo на новое измененное изображение
-            self.photo = InMemoryUploadedFile(output, 'ImageField',
-                                              self.photo.name, 'image/jpeg', sys.getsizeof(output), None)
+            self.photo = InMemoryUploadedFile(
+                output, 'ImageField', self.photo.name, mime_type, sys.getsizeof(output), None
+            )
 
         super().save(*args, **kwargs)
-
     def __str__(self):
         return self.username
 
@@ -73,15 +100,50 @@ def create_initial_portfolio(sender, instance, created, **kwargs):
         Portfolio.objects.create(user=instance, menu='Наука', content='Content for Menu 3', active=True)
 
 
-def resize_image(image, size=(800, 800), quality=85):
+
+def resize_image(image, max_height=800, quality=85):
     img = Image.open(image)
-    img = img.convert('RGB')
-    img = img.resize(size, Image.LANCZOS)
+
+    # Определяем исходный формат изображения
+    image_format = img.format
+
+    # Проверяем, если изображение в режиме RGBA (имеет альфа-канал), конвертируем в RGB
+    if img.mode in ('RGBA', 'LA'):
+        img = img.convert('RGB')
+
+    # Получаем текущие размеры изображения
+    original_width, original_height = img.size
+
+    # Если высота превышает max_height, пересчитываем ширину
+    if original_height > max_height:
+        aspect_ratio = original_width / original_height
+        new_height = max_height
+        new_width = int(new_height * aspect_ratio)
+    else:
+        # Если исходная высота меньше max_height, сохраняем оригинальные размеры
+        new_width, new_height = original_width, original_height
+
+    # Изменяем размер изображения, сохраняя соотношение сторон
+    img = img.resize((new_width, new_height), Image.LANCZOS)
+
+    # Подготавливаем буфер для сохранения изображения
     output = BytesIO()
-    img.save(output, format='JPEG', quality=quality)
+
+    # Сохраняем изображение в исходном формате
+    if image_format == 'PNG':
+        img.save(output, format='PNG')
+        mime_type = 'image/png'
+    else:
+        img.save(output, format='JPEG', quality=quality)
+        mime_type = 'image/jpeg'
+
     output.seek(0)
-    return InMemoryUploadedFile(output, 'ImageField', f"{image.name.split('.')[0]}.jpg", 'image/jpeg',
-                                sys.getsizeof(output), None)
+
+    # Возвращаем InMemoryUploadedFile
+    return InMemoryUploadedFile(
+        output, 'ImageField', f"{image.name.split('.')[0]}.{image_format.lower()}", mime_type,
+        sys.getsizeof(output), None
+    )
 
 
 @receiver(pre_save, sender=Portfolio)
