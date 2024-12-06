@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
 
-       <meta name="description" content="Безплатное электронное протфолио сцециалиста ">
+    <meta name="description" content="Безплатное электронное протфолио сцециалиста ">
     <meta name="keywords" content="портфолио, электронное портфолио, бегислан портфолио">
 
     <!-- Иконка сайта -->
-    <link rel="icon" href="https://img.icons8.com/?size=100&id=LoyAjcvVKv1K&format=png&color=000000" type="image/x-icon"/>
+    <link rel="icon" href="https://img.icons8.com/?size=100&id=LoyAjcvVKv1K&format=png&color=000000"
+          type="image/x-icon"/>
 
     <title>Портфолио</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -25,17 +26,19 @@
 <div class="container">
 
     {% if user.is_authenticated %}
+
         <div class="container my-5">
             <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
                 <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                    <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ user.last_name }} {{ user.first_name }} {% if user.ost_name %}{{ user.ost_name }}{% endif %}</h1>
+                    <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ user.last_name }} {{ user.first_name }}
+                        {% if user.ost_name %}{{ user.ost_name }}{% endif %}</h1>
                     <p class="lead">Информация о пользователя</p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
 
-                        <a class="lead text-decoration-none fw-bolder text-success"  href="{% url 'admin_core' %}">
+                        <a class="lead text-decoration-none fw-bolder text-success" href="{% url 'admin_core' %}">
                             В админку
                         </a>
-                        <a class="lead text-decoration-none fw-bolder text-success"  href="{% url 'logout' %}">
+                        <a class="lead text-decoration-none fw-bolder text-success" href="{% url 'logout' %}">
                             Выход
                         </a>
 
@@ -43,15 +46,17 @@
                             Посмотрет свой портфолио
                         </a>
                         {% if user.is_superuser %}
-                        <a class="lead text-decoration-none fw-bolder text-success" href="{% url 'list_portfolios' %}">
-                            Список
-                        </a>
+                            <a class="lead text-decoration-none fw-bolder text-success"
+                               href="{% url 'list_portfolios' %}">
+                                Список
+                            </a>
                         {% endif %}
                     </div>
                 </div>
                 <div class="col-lg-3 offset-lg-1 p-0  shadow-lg">
                     {% if user.photo %}
-                        <img  class="rounded-lg-3" src="{{ user.photo.url }}" alt="" width="300" style="object-fit: cover;">
+                        <img class="rounded-lg-3" src="{{ user.photo.url }}" alt="" width="300"
+                             style="object-fit: cover;">
                     {% else %}
                         <img class="rounded-lg-3" style="object-fit: cover;"
                              src="https://img.myloview.com/stickers/user-icon-vector-people-icon-profile-vector-icon-person-illustration-business-user-icon-users-group-symbol-male-user-symbol-700-223068883.jpg"
@@ -60,31 +65,189 @@
                 </div>
             </div>
         </div>
+
     {% else %}
 
         <div class="container col-xxl-8 px-4 py-5">
             <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
                 <div class="col-10 col-sm-8 col-lg-6">
-                    <img src="https://chisellabs.com/glossary/wp-content/uploads/2023/05/962b45f9-e2a6-4f59-8f0a-9e1e1a1d1f7f.png"
-                         class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500"
-                         loading="lazy">
+                    <div class="e-card playing">
+                        <div class="image"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="wave"></div>
+                        <div class="infotop">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="icon">
+                                <path fill="currentColor" d="M19.4133 4.89862L14.5863 2.17544C12.9911 1.27485 11.0089 1.27485 9.41368 2.17544L4.58674
+                           4.89862C2.99153 5.7992 2 7.47596 2 9.2763V14.7235C2 16.5238 2.99153 18.2014 4.58674 19.1012L9.41368
+                           21.8252C10.2079 22.2734 11.105 22.5 12.0046 22.5C12.6952 22.5 13.3874 22.3657 14.0349 22.0954C14.2204
+                           22.018 14.4059 21.9273 14.5872 21.8252L19.4141 19.1012C19.9765 18.7831 20.4655 18.3728 20.8651
+                           17.8825C21.597 16.9894 22 15.8671 22 14.7243V9.27713C22 7.47678 21.0085 5.7992 19.4133 4.89862ZM4.10784
+                           14.7235V9.2763C4.10784 8.20928 4.6955 7.21559 5.64066 6.68166L10.4676 3.95848C10.9398 3.69152 11.4701
+                           3.55804 11.9996 3.55804C12.5291 3.55804 13.0594 3.69152 13.5324 3.95848L18.3593 6.68166C19.3045 7.21476
+                           19.8922 8.20928 19.8922 9.2763V9.75997C19.1426 9.60836 18.377 9.53091 17.6022 9.53091C14.7929 9.53091
+                           12.1041 10.5501 10.0309 12.3999C8.36735 13.8847 7.21142 15.8012 6.68783 17.9081L5.63981 17.3165C4.69466
+                           16.7834 4.10699 15.7897 4.10699 14.7235H4.10784ZM10.4676 20.0413L8.60933 18.9924C8.94996 17.0479 9.94402
+                           15.2665 11.4515 13.921C13.1353 12.4181 15.3198 11.5908 17.6022 11.5908C18.3804 11.5908 19.1477 11.6864
+                           19.8922 11.8742V14.7235C19.8922 15.2278 19.7589 15.7254 19.5119 16.1662C18.7615 15.3596 17.6806 14.8528
+                            16.4783 14.8528C14.2136 14.8528 12.3781 16.6466 12.3781 18.8598C12.3781 19.3937 12.4861 19.9021 12.68
+                            20.3676C11.9347 20.5316 11.1396 20.4203 10.4684 20.0413H10.4676Z"></path>
+                            </svg>
+                            <br>
+                            Portfolio
+                            <br>
+                            <div class="name">Begislan</div>
+                        </div>
+                    </div>
+
+                    <style>
+                        .e-card {
+                            margin: 100px auto;
+                            background: transparent;
+                            box-shadow: 0px 8px 28px -9px rgba(0, 0, 0, 0.45);
+                            position: relative;
+                            width: 240px;
+                            height: 330px;
+                            border-radius: 16px;
+                            overflow: hidden;
+                        }
+
+                        .wave {
+                            position: absolute;
+                            width: 540px;
+                            height: 700px;
+                            opacity: 0.6;
+                            left: 0;
+                            top: 0;
+                            margin-left: -50%;
+                            margin-top: -70%;
+                            background: linear-gradient(744deg, #af40ff, #5b42f3 60%, #00ddeb);
+                        }
+
+                        .icon {
+                            width: 3em;
+                            margin-top: -1em;
+                            padding-bottom: 1em;
+                        }
+
+                        .infotop {
+                            text-align: center;
+                            font-size: 20px;
+                            position: absolute;
+                            top: 5.6em;
+                            left: 0;
+                            right: 0;
+                            color: rgb(255, 255, 255);
+                            font-weight: 600;
+                        }
+
+                        .name {
+                            font-size: 14px;
+                            font-weight: 100;
+                            position: relative;
+                            top: 1em;
+                            text-transform: lowercase;
+                        }
+
+                        .wave:nth-child(2),
+                        .wave:nth-child(3) {
+                            top: 210px;
+                        }
+
+                        .playing .wave {
+                            border-radius: 40%;
+                            animation: wave 3000ms infinite linear;
+                        }
+
+                        .wave {
+                            border-radius: 40%;
+                            animation: wave 55s infinite linear;
+                        }
+
+                        .playing .wave:nth-child(2) {
+                            animation-duration: 4000ms;
+                        }
+
+                        .wave:nth-child(2) {
+                            animation-duration: 50s;
+                        }
+
+                        .playing .wave:nth-child(3) {
+                            animation-duration: 5000ms;
+                        }
+
+                        .wave:nth-child(3) {
+                            animation-duration: 45s;
+                        }
+
+                        @keyframes wave {
+                            0% {
+                                transform: rotate(0deg);
+                            }
+
+                            100% {
+                                transform: rotate(360deg);
+                            }
+                        }
+                    </style>
+
                 </div>
                 <div class="col-lg-6">
-                    <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">Добро пожаловать в платформу
-                       онлайн портфолио</h1>
-                    <p class="lead">На этой платформе вы можете создать своё портфолио или просматривать портфолио других пользователей.</p>
+                    <h1 class=" fw-bold text-body-emphasis lh-1 mb-3">Добро пожаловать в платформу
+                        онлайн портфолио</h1>
+                    <p class="lead">На этой платформе вы можете создать своё портфолио или просматривать портфолио
+                        других пользователей.</p>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-                        <a class="lead text-decoration-none fw-bolder text-success"  href="{% url 'login' %}">
-                            Вход
+                        <a class="lead text-decoration-none fw-bolder text-success" href="{% url 'login' %}">
+
+                            <button class="custom-btn btn-2">Вход</button>
+                            <style>
+                                /* From Uiverse.io by AqFox */
+                                .custom-btn {
+                                    width: 130px;
+                                    height: 40px;
+                                    color: #fff;
+                                    border-radius: 5px;
+                                    padding: 10px 25px;
+                                    font-family: 'Lato', sans-serif;
+                                    font-weight: 500;
+                                    background: transparent;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                    position: relative;
+                                    display: inline-block;
+                                    box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+                                    7px 7px 20px 0px rgba(0, 0, 0, .1),
+                                    4px 4px 5px 0px rgba(0, 0, 0, .1);
+                                    outline: none;
+                                    font-size: 15px;
+                                }
+
+                                .btn-2 {
+                                    background: #004dff;
+                                    background: linear-gradient(0deg, #004dff 0%, #004dff 100%);
+                                    border: none;
+                                }
+
+                                .btn-2:before {
+                                    height: 0%;
+                                    width: 2px;
+                                }
+
+                                .btn-2:hover {
+                                    box-shadow: 4px 4px 6px 0 rgba(255, 255, 255, .5),
+                                    -4px -4px 6px 0 rgba(116, 125, 136, .5),
+                                    inset -4px -4px 6px 0 rgba(255, 255, 255, .2),
+                                    inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+                                }
+
+                            </style>
+
                         </a>
-                        <a class="lead text-decoration-none fw-bolder text-success"  href="{% url 'signup' %}">
-                            Регистрация
+                        <a class="lead text-decoration-none fw-bolder text-success" href="{% url 'signup' %}">
+
+                               <button class="custom-btn btn-2">Регистрация</button>
                         </a>
-                        {% if user.is_superuser %}
-                        <a class="lead text-decoration-none fw-bolder text-success"  href="{% url 'list_portfolios' %}">
-                            Список других
-                        </a>
-                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -93,16 +256,15 @@
     {% endif %}
 
     <div class="container">
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <span class="mb-3 mb-md-0 text-body-secondary">by Bayastan uulu Begislan</span>
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <span class="mb-3 mb-md-0 text-body-secondary">by Bayastan uulu Begislan</span>
+            </div>
+        </footer>
     </div>
-  </footer>
-</div>
 
 
 </div>
-
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
