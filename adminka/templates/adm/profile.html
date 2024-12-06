@@ -3,28 +3,43 @@
 {% block title %}Профиль {{ user.username }}{% endblock %}
 
 {% block content %}
-<div class="profile p-3">
-    <h1>Профиль пользователя: {{ user.username }}</h1>
-    <div class="row">
-        <div class="col">
-            <div class="user-info">
-                <p><strong>Имя:</strong> {{ user.first_name }} {{ user.last_name }}</p>
-                <p><strong>Электронная почта:</strong> {{ user.email }}</p>
-                <p><strong>Контакт:</strong> {{ user.phone }}</p>
+<div class="container py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Профиль пользователя: {{ user.username }}</h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <!-- Информация о пользователе -->
+                <div class="col-md-6">
+                    <h5 class="text-secondary">Информация</h5>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><strong>Имя:</strong> {{ user.first_name }} {{ user.last_name }}</li>
+                        <li class="list-group-item"><strong>Электронная почта:</strong> {{ user.email }}</li>
+                        <li class="list-group-item"><strong>Контакт:</strong> {{ user.phone|default:"Не указан" }}</li>
+                    </ul>
+                </div>
+                <!-- Фото профиля -->
+                <div class="col-md-6 text-center">
+                    <h5 class="text-secondary">Фото профиля</h5>
+                    {% if user.photo %}
+                        <img src="{{ user.photo.url }}" alt="Фото пользователя" class="img-thumbnail rounded-circle shadow-sm" style="width: 150px; height: 150px; object-fit: cover;">
+                    {% else %}
+                        <div class="alert alert-warning mt-3">Фото отсутствует</div>
+                    {% endif %}
+                </div>
+            </div>
+            <hr>
+            <!-- Кнопки управления -->
+            <div class="mt-3 d-flex justify-content-between">
+                <a href="{% url 'update_profile' %}" class="btn btn-info">
+                    <i class="bi bi-pencil-square"></i> Изменить профиль
+                </a>
+                <a href="{% url 'change_password' %}" class="btn btn-success">
+                    <i class="bi bi-key"></i> Изменить пароль
+                </a>
             </div>
         </div>
-        <div class="col">
-            {% if user.photo %}
-            <img style="border-radius: 20px; object-fit: cover;" class="shadow-lg" src="{{ user.photo.url }}" alt="">
-            {% else %}
-            фото нет
-            {% endif %}
-        </div>
     </div>
-
-
-
-    <a class="btn btn-info" href="{% url 'update_profile' %}">Изменить профиль</a>
-    <a class="btn btn-success" href="{% url 'change_password' %}">Изменить пароль</a>
 </div>
 {% endblock %}

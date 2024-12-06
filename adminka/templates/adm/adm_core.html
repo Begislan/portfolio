@@ -3,8 +3,45 @@
 {% block title %}Админка Портфолио{% endblock %}
 
 {% block content %}
-<section class="p-5">
-<h1>Добро пожаловать {{ user.first_name }} в админку</h1>
+<section class="p-5 bg-light shadow-sm rounded-3">
+    <div class="container text-center">
+        <h1 class="display-4 text-primary mb-3">Добро пожаловать, {{ user.first_name }}!</h1>
+        <p class="lead text-secondary">Вы вошли в панель администратора. Здесь вы можете управлять вашим портфолио.</p>
 
- </section>
+        <div class="row mt-4">
+            <!-- Карточка управления -->
+            <div class="col-md-4">
+                <div class="card border-primary">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-primary">Управление меню</h5>
+                        <p class="card-text">Добавляйте, редактируйте или удаляйте элементы вашего портфолио.</p>
+                        <a href="{% url 'create_portfolio' %}" class="btn btn-outline-primary">Перейти</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка профиля -->
+            <div class="col-md-4">
+                <div class="card border-success">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-success">Ваш профиль</h5>
+                        <p class="card-text">Измените данные своего профиля или пароль.</p>
+                        <a href="{% url 'profile' %}" class="btn btn-outline-success">Настроить</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Карточка главной страницы -->
+            <div class="col-md-4">
+                <div class="card border-info">
+                    <div class="card-body text-center">
+                        <h5 class="card-title text-info">Главная страница</h5>
+                        <p class="card-text">Вернитесь на главную страницу вашего сайта.</p>
+                        <a href="{% url 'core' %}" class="btn btn-outline-info">Перейти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock %}
