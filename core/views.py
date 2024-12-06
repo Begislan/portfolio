@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Portfolio, CustomUser
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 
 # Create your views here.
 def core(request):
@@ -28,14 +29,27 @@ def user(request, username):
 
 @login_required
 def list_portfolios(request):
-    port = Portfolio.objects.all()
-    paginator = Paginator(port, 10)  # Show 10 portfolios per page
+    query = request.GET.get('q', '')  # Получаем запрос из строки поиска
+    port = Portfolio.objects.filter(
+        Q(user__first_name__icontains=query) |
+        Q(user__last_name__icontains=query) |
+        Q(user__username__icontains=query)
+    )
 
+    data = []
+    ids = []
+    for i in port:
+        if i.user.id not in ids:
+            data.append(i)
+            ids.append(i.user.id)
+
+    paginator = Paginator(data, 10)  # Пагинация с 10 портфолио на страницу
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     context = {
         'page_obj': page_obj,
+        'query': query,  # Передаём строку поиска в шаблон
     }
     return render(request, 'core/list_portfolios.html', context)
 

@@ -18,6 +18,40 @@
 
 </head>
 <body>
+
+<style>
+    /* Стиль для индикатора загрузки */
+    #loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        color: #333;
+        z-index: 1000;
+    }
+
+    /* Скрываем индикатор загрузки после полной загрузки страницы */
+    #loading.hidden {
+        display: none;
+    }
+</style>
+
+<div id="loading">Загрузка...</div>
+<script>
+    // Скрываем индикатор загрузки после загрузки страницы
+    window.addEventListener("load", function () {
+        const loading = document.getElementById("loading");
+        loading.classList.add("hidden");
+    });
+</script>
+
+
 <br>
 {% include 'include/header.html' %}
 

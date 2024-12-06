@@ -2,64 +2,78 @@
 
 {% block title %}{{ user.last_name }} {{ user.first_name }}{% endblock %}
 
-
 {% block content %}
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #e0eafc, #cfdef3);
+    }
 
-    <div class="container">
+    .rounded-container {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        margin: 20px 0;
+    }
 
-        {% if change_page.background %}
-            <div class="container my-3">
-                <div class="row p-4 pb-0 pe-lg-0 pt-lg-0 align-items-center rounded-3 border shadow-lg">
-                    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ change_page.menu }}</h1>
+    .header-container {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+    }
 
+    .header-container h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin: 0;
+    }
 
-                    </div>
-                    <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+    .header-container img {
+        border-radius: 12px;
+        max-width: 100%;
+        height: auto;
+    }
 
-                        {% if user.photo %}
-                            <img style="object-fit: cover;" class="rounded-lg-3"
-                                 src="{{ user.photo.url }}"
-                                 alt="" width="520">
-                        {% else %}
-                            <img class="rounded-lg-3"
-                                 src="https://img.myloview.com/stickers/user-icon-vector-people-icon-profile-vector-icon-person-illustration-business-user-icon-users-group-symbol-male-user-symbol-700-223068883.jpg"
-                                 alt="" width="520">
-                        {% endif %}
-                    </div>
-                </div>
+    .content-container {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .content-container p {
+        color: #555;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+
+    .content-container .date {
+        font-size: 0.9rem;
+        color: #888;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container">
+    <div class="bg-white">
+        <div class="header-container">
+            <div class="col-lg-8">
+                <h1>{{ change_page.menu }}</h1>
             </div>
-
-        {% else %}
-            <div class="container my-3">
-                <div class="row p-4 pb-0 pe-lg-0 pt-lg-0 align-items-center rounded-3 border shadow-lg">
-                    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
-                        <h1 class="display-4 fw-bold lh-1 text-body-emphasis">{{ change_page.menu }}</h1>
-
-
-                    </div>
-                    <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
-
-                        {% if user.photo %}
-                            <img style="object-fit: cover;" class="rounded-lg-3"
-                                 src="{{ user.photo.url }}"
-                                 alt="" width='300px'>
-                        {% else %}
-                            <img class="rounded-lg-3"
-                                 src="https://img.myloview.com/stickers/user-icon-vector-people-icon-profile-vector-icon-person-illustration-business-user-icon-users-group-symbol-male-user-symbol-700-223068883.jpg"
-                                 alt="" width="400">
-                        {% endif %}
-                    </div>
-                </div>
+            <div class="col-lg-4">
+                {% if user.photo %}
+                    <img src="{{ user.photo.url }}" alt="User Photo">
+                {% else %}
+                    <img src="https://img.myloview.com/stickers/user-icon-vector-people-icon-profile-vector-icon-person-illustration-business-user-icon-users-group-symbol-male-user-symbol-700-223068883.jpg"
+                         alt="Default User Icon">
+                {% endif %}
             </div>
-        {% endif %}
-
-        <div class="container p-5 border" style="background-color: rgba(255, 255, 255, 0.5);">
-            {{ change_page.content|safe }}
-            <p>Дата создание: {{ change_page.create_date }}</p>
         </div>
     </div>
-
-
+    <br>
+    <div class="content-container">
+        {{ change_page.content|safe }}
+        <p class="date">Дата создания: {{ change_page.create_date }}</p>
+    </div>
+</div>
 
 {% endblock %}
