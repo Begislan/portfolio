@@ -4,3 +4,4 @@ port_venv
 media
 static
 env
+db.sqlite3
