@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'accounts',
-
     'ckeditor',
     'ckeditor_uploader',  # Для поддержки загрузки файлов
     'phonenumber_field',
@@ -117,9 +116,8 @@ AUTH_USER_MODEL = 'core.CustomUser'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Путь для медиа-файлов
-MEDIA_URL = '/home/begiportfolio/portfolio/media/'
-MEDIA_ROOT = '/home/begiportfolio/portfolio/media'
-
+MEDIA_URL = '/media/'  # URL для доступа к медиафайлам
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Путь на сервере, где будут храниться медиафайлы
 
 
 # Default primary key field type
@@ -128,42 +126,33 @@ MEDIA_ROOT = '/home/begiportfolio/portfolio/media'
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'full',
-        'height': 300,
-        'width': 900,
-        'simpleUpload': {
-            'uploadUrl': '/upload/',  # URL для загрузки изображений и файлов
-            'headers': {
-                'X-CSRF-TOKEN': 'your-csrf-token',  # добавьте если требуется CSRF токен
-                # другие заголовки если нужны
-            }
-        },
-        'stylesSet': [
-            # Вставьте сюда свои стили CKEditor 5, например:
-            {
-                'name': 'Office-like Styles',
-                'elements': 'p, h1, h2, h3, h4, h5, h6, blockquote, pre',
-                'styles': {
-                    'color': 'black',
-                    'font-family': 'Arial, sans-serif',
-                    'font-size': '16px',
-                    'line-height': '1.6',
-                    'margin-bottom': '10px'
-                }
-            },
-            {
-                'name': 'Inline Style',
-                'element': 'span',
-                'styles': {
-                    'font-style': 'italic',
-                    'color': 'gray'
-                }
-            }
-        ],
-    },
+# CKEDITOR_CONFIGS = {
+#     'default': {
+#         'toolbar': 'full',
+#         'height': 300,
+#         'width': 700,
+#         'simpleUpload': {
+#             'uploadUrl': '/upload/',  # URL для загрузки изображений и файлов
+#             'headers': {
+#                 'X-CSRF-TOKEN': 'your-csrf-token',  # добавьте если требуется CSRF токен
+#                 # другие заголовки если нужны
+#             }
+#         },
+#         'extraPlugins': ','.join(['image', 'uploadimage']),  # Подключаем загрузку изображений
+#         'filebrowserUploadUrl': '/ckeditor/upload/',  # URL для загрузки файлов
+#         'filebrowserUploadMethod': 'form',
+#     },
 
+# }
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "full",
+        "height": 300,
+        "width": 900,
+        "extraPlugins": ",".join(["image", "uploadimage"]),  # Включаем загрузку изображений
+        "filebrowserUploadUrl": "/ckeditor/upload/",  # URL загрузки изображений
+        "filebrowserUploadMethod": "form",
+    }
 }
 
 

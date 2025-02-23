@@ -9,8 +9,6 @@ urlpatterns = [
     path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('core.urls')),
     # auth
-    path('login/', views.LoginView.as_view(), name='login'),
-    path('logout/', views.LogoutView.as_view(), name='logout'),
     path("accounts/", include("accounts.urls")),  # new
     # admin
     path('adm/', include('adminka.urls')),

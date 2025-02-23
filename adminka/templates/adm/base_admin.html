@@ -42,7 +42,7 @@
                     <img src="https://t3.ftcdn.net/jpg/05/53/79/60/360_F_553796090_XHrE6R9jwmBJUMo9HKl41hyHJ5gqt9oz.jpg"
                          width="40" height="40" class="rounded-circle me-2">
                 {% endif %}
-                <strong>{{ user.last_name }} {{ user.first_name }}</strong>
+                <strong>{{ user.username }} {{ user.first_name }}</strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" href="{% url 'profile' %}">Профиль</a></li>
