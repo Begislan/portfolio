@@ -20,20 +20,14 @@ def logout_view(request):
 
 
 def login_user(request):
-    print("shag")
     if request.method == "POST":
-        print('shag 0')
         form_data = {
             'email': request.POST['username'],
             'password': request.POST['password'],
         }
         res = requests.post('https://api.myedu.oshsu.kg/public/api/login', form_data)
         email = request.POST['username']
-        print(form_data)
-        print(res)
-        print('Shag 2')
         if res.status_code == 200:
-            print('res status code')
             token = res.json()['authorisation']['token']
             headers = {
                 "Authorization": f"Bearer {token}",
@@ -64,7 +58,6 @@ def login_user(request):
         else:
             is_exist = User.objects.filter(username=email).exists()
             # user = form.get_user()
-            print(is_exist)
             if is_exist:
                 user = User.objects.get(username=email)
                 login(request, user)
