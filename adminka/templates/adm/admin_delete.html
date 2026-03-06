@@ -1,0 +1,66 @@
+{% extends 'adm/base_admin.html' %}
+
+{% block title %}Удаление раздела{% endblock %}
+
+{% block content %}
+<div class="container py-5 animate__animated animate__fadeIn">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="custom-card p-4 p-md-5 text-center">
+                <div class="mb-4">
+                    <div class="icon-wrapper mx-auto"
+                        style="width: 100px; height: 100px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-exclamation-triangle text-white" style="font-size: 3rem;"></i>
+                    </div>
+                </div>
+
+                <h1 class="h3 fw-bold mb-3">Удалить раздел?</h1>
+                <p class="text-muted mb-4">
+                    Вы уверены, что хотите удалить раздел <strong>"{{ portfolios.menu }}"</strong>?<br>
+                    Это действие нельзя отменить.
+                </p>
+
+                <form method="post" class="d-flex gap-3 justify-content-center">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger btn-lg px-5">
+                        <i class="bi bi-trash me-2"></i> Да, удалить
+                    </button>
+                    <a href="{% url 'admin_core' %}" class="btn btn-outline-custom btn-lg px-4">
+                        <i class="bi bi-x-circle me-2"></i> Отмена
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .icon-wrapper {
+        box-shadow: 0 10px 30px rgba(245, 87, 108, 0.3);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.05);
+        }
+    }
+
+    .btn-danger {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        border: none;
+        transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+    }
+</style>
+{% endblock %}

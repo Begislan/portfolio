@@ -1,0 +1,235 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ user.username }} | Портфолио{% endblock %}
+
+{% block content %}
+<div class="container" style="padding-top: 2rem; padding-bottom: 4rem;">
+    <div class="row g-4">
+
+        <div class="col-lg-3">
+            <div class="sticky-top" style="top: 84px;">
+
+                <div class="portfolio-glass-card p-0 overflow-hidden mb-3">
+                    <div style="background: var(--navy); padding: 1.5rem 1.5rem 4rem; position: relative;">
+                        <span class="section-badge"
+                            style="border-color:rgba(201,168,76,.4);color:var(--gold-light);">Публичный профиль</span>
+                    </div>
+
+                    <div style="padding: 0 1.5rem; margin-top: -3.5rem; position: relative;">
+                        {% if user.photo %}
+                        <img src="{{ user.photo.url }}" alt="{{ user.username }}"
+                            onerror="this.src='https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&background=0d1b2a&color=fff&size=200';"
+                            style="width:90px;height:90px;object-fit:cover;border-radius:10px;border:3px solid var(--white);box-shadow:var(--shadow-md);">
+                        {% else %}
+                        <img src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&background=0d1b2a&color=fff&size=200"
+                            alt="{{ user.username }}"
+                            style="width:90px;height:90px;object-fit:cover;border-radius:10px;border:3px solid var(--white);box-shadow:var(--shadow-md);">
+                        {% endif %}
+                    </div>
+
+                    <div class="p-4 pt-3">
+                        <h3 class="fw-700 mb-0" style="font-size:1.05rem;">{{ user.last_name }} {{ user.first_name }}</h3>
+                        
+                        {% if user.ost_name %}
+                        <p class="mb-2" style="font-size:0.85rem;color:var(--slate-light);">{{ user.ost_name }}</p>
+                        {% endif %}
+                        <p class="mb-3" style="font-size:0.8rem;color:var(--gold);">@{{ user.username }}</p>
+
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'portfolio_pdf' user.id %}?change_page={{ change_page.id }}" class="btn btn-primary-custom btn-sm">
+                                <i class="bi bi-file-earmark-pdf"></i> Скачать PDF
+                            </a>
+                            <a href="javascript:void(0)" onclick="window.print()" class="btn btn-outline-custom btn-sm">
+                                <i class="bi bi-printer"></i> Печать
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-glass-card">
+                    <span class="card-gold-bar"></span>
+                    <h6 class="fw-700 mb-3"
+                        style="font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--slate-light);">
+                        Контакты</h6>
+
+                    {% if user.email %}
+                    <div class="info-row">
+                        <i class="bi bi-envelope"></i>
+                        <a href="mailto:{{ user.email }}" class="text-truncate"
+                            style="color:var(--slate);font-size:0.875rem;">{{ user.email }}</a>
+                    </div>
+                    {% endif %}
+
+{#                    {% if user.phone %}#}
+{#                    <div class="info-row">#}
+{#                        <i class="bi bi-telephone"></i>#}
+{#                        <a href="tel:{{ user.phone }}" style="color:var(--slate);font-size:0.875rem;">{{ user.phone }}</a>#}
+{#                    </div>#}
+{#                    {% endif %}#}
+{##}
+{#                    {% if not user.email and not user.phone %}#}
+{#                    <p class="text-muted small mb-0">Контакты не указаны</p>#}
+{#                    {% endif %}#}
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+
+            {% if portfolios %}
+            <div class="d-flex flex-wrap gap-2 mb-4 nav-pills-custom">
+                {% for portfolio in portfolios %}
+                <a href="?change_page={{ portfolio.id }}"
+                    class="nav-link {% if portfolio.id == change_page.id %}active{% endif %}">
+                    {{ portfolio.menu }}
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="portfolio-glass-card p-4 p-md-5">
+                {% if change_page %}
+                <div class="mb-4 pb-3" style="border-bottom: 1px solid var(--border);">
+                    <span class="card-gold-bar"></span>
+                    <h2 class="mb-0" style="font-size:1.5rem;">{{ change_page.menu }}</h2>
+                </div>
+                <div class="portfolio-content">
+                    {% if change_page.content %}
+                    {{ change_page.content|safe }}
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="bi bi-journals display-4 d-block mb-3" style="color:var(--border);"></i>
+                        <p class="text-muted mb-0">В этом разделе пока нет информации.</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <i class="bi bi-folder2-open display-4 d-block mb-3" style="color:var(--border);"></i>
+                    <p class="text-muted mb-0">Выберите раздел в меню выше.</p>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .portfolio-content img {
+        max-width: 100%;
+        border-radius: 8px;
+        margin: 1rem 0;
+    }
+
+    .portfolio-content h2,
+    .portfolio-content h3 {
+        color: var(--navy);
+        margin-top: 1.5rem;
+    }
+
+    .portfolio-content ul {
+        padding-left: 1.5rem;
+    }
+
+    .portfolio-content li {
+        margin-bottom: 6px;
+    }
+
+    .portfolio-content a {
+        color: var(--navy-soft);
+    }
+
+   @media print {
+        @page {
+            margin: 0.5cm; /* Поля бумаги */
+        }
+
+        /* 1. Прячем мусор */
+        .navbar, footer, .btn, .nav-pills-custom, .section-badge, .card-gold-bar, .bi, .sticky-top::before {
+            display: none !important;
+        }
+
+        /* 2. Сбрасываем контейнеры и заставляем их быть в одну строку */
+        .container, .container-fluid {
+            width: 100% !important;
+            max-width: none !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .row {
+            display: flex !important; /* Включаем флекс-режим для печати */
+            flex-direction: row !important;
+            flex-wrap: nowrap !important;
+            align-items: flex-start !important;
+            width: 100% !important;
+            margin: 0 !important;
+        }
+
+        /* 3. Левая колонка (Контакты) */
+        .col-lg-3 {
+            width: 25% !important; /* Фиксированная ширина */
+            flex: 0 0 25% !important;
+            padding-right: 15px !important;
+            margin: 0 !important;
+            border-right: 1px solid #eee; /* Тонкая разделительная линия */
+        }
+
+        /* 4. Правая колонка (Контент) */
+        .col-lg-9 {
+            width: 75% !important;
+            flex: 0 0 75% !important;
+            padding-left: 15px !important;
+            margin: 0 !important;
+        }
+
+        /* 5. Исправляем "пропавшую" информацию о человеке */
+        .portfolio-glass-card {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin-bottom: 15px !important;
+        }
+
+        /* Сбрасываем негативные отступы от синей шапки */
+        div[style*="background: var(--navy)"] {
+            background: #f8f9fa !important; /* Легкий серый фон вместо синего */
+            padding: 10px !important;
+            margin-bottom: 10px !important;
+            -webkit-print-color-adjust: exact;
+        }
+
+        div[style*="margin-top: -3.5rem"] {
+            margin-top: 0 !important;
+        }
+
+        /* Тексты: делаем черными и компактными */
+        h2, h3, h6, p, a, div {
+            color: #000 !important;
+            text-shadow: none !important;
+        }
+
+        body {
+            font-size: 9pt !important;
+            line-height: 1.2 !important;
+        }
+
+        h3 { font-size: 11pt !important; margin: 5px 0 !important; }
+        h2 { font-size: 14pt !important; margin-top: 0 !important; }
+
+        img {
+            max-width: 65px !important;
+            border-radius: 4px !important;
+        }
+
+        /* Убираем липкость */
+        .sticky-top {
+            position: relative !important;
+            top: 0 !important;
+        }
+    }
+</style>
+{% endblock %}

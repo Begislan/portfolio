@@ -1,0 +1,48 @@
+port_venv
+.venv
+.idea
+media
+static
+env
+db.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Django
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+.env
+
+# Инструменты разработки
+.vscode/
+.idea/
+*.swp
+*.bak
+.DS_Store
+
+# Celery / Redis
+celerybeat-schedule
+
+# Тесты и покрытие
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.pytest_cache/

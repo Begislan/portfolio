@@ -1,0 +1,74 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Вход | Portfolio{% endblock %}
+
+{% block content %}
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem 1rem;">
+    <div style="width:100%;max-width:420px;">
+
+        <!-- Brand mark -->
+        <div class="text-center mb-4">
+            <div
+                style="width:52px;height:52px;background:var(--navy);border-radius:12px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                <i class="bi bi-shield-check" style="color:var(--gold);font-size:1.5rem;"></i>
+            </div>
+            <h1 class="h3 mb-1">Добро пожаловать</h1>
+            <p style="color:var(--slate-light);font-size:0.9rem;">Войдите в свою учётную запись</p>
+        </div>
+
+        <div class="portfolio-glass-card p-4 p-md-5">
+            {% if form.errors %}
+            <div class="alert mb-4 p-3"
+                style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#dc2626;font-size:0.875rem;">
+                <ul class="mb-0 list-unstyled">
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <li><i class="bi bi-exclamation-circle me-2"></i>{{ error }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <li><i class="bi bi-exclamation-circle me-2"></i>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="id_username" class="form-label">Имя пользователя</label>
+                    <input type="text" name="username" class="form-control" id="id_username" placeholder="@username"
+                        autocomplete="username" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="id_password" class="form-label">Пароль</label>
+                    <input type="password" name="password" class="form-control" id="id_password" placeholder="••••••••"
+                        autocomplete="current-password" required>
+                </div>
+
+                <button class="btn btn-primary-custom w-100" type="submit" style="padding:0.75rem;">
+                    Войти <i class="bi bi-arrow-right ms-2"></i>
+                </button>
+            </form>
+
+            <hr style="border-color:var(--border);margin:1.5rem 0;">
+
+            <div class="text-center">
+                <p class="mb-2" style="font-size:0.875rem;color:var(--slate-light);">Нет учётной записи?</p>
+                <a href="{% url 'signup' %}" class="btn btn-outline-custom w-100">
+                    Зарегистрироваться
+                </a>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'core' %}" style="font-size:0.825rem;color:var(--slate-light);">
+                    <i class="bi bi-arrow-left me-1"></i> На главную
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Регистрация | Portfolio{% endblock %}
+
+{% block content %}
+<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:3rem 1rem;">
+    <div style="width:100%;max-width:660px;">
+
+        <!-- Brand mark -->
+        <div class="text-center mb-4">
+            <div
+                style="width:52px;height:52px;background:var(--navy);border-radius:12px;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                <i class="bi bi-person-plus" style="color:var(--gold);font-size:1.4rem;"></i>
+            </div>
+            <h1 class="h3 mb-1">Создать учётную запись</h1>
+            <p style="color:var(--slate-light);font-size:0.9rem;">Присоединяйтесь к профессиональной платформе</p>
+        </div>
+
+        <div class="portfolio-glass-card p-4 p-md-5">
+
+            {% if form.errors %}
+            <div class="mb-4 p-3"
+                style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;color:#dc2626;font-size:0.875rem;">
+                <ul class="mb-0 list-unstyled">
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <li><i class="bi bi-exclamation-circle me-2"></i>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <li><i class="bi bi-exclamation-circle me-2"></i>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <!-- Section label -->
+                <div class="mb-3">
+                    <span
+                        style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--slate-light);">Основная
+                        информация</span>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="lastName" class="form-label">Фамилия</label>
+                        <input type="text" name="last_name" class="form-control" id="lastName" placeholder="Иванов"
+                            required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="firstName" class="form-label">Имя</label>
+                        <input type="text" name="first_name" class="form-control" id="firstName" placeholder="Иван"
+                            required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="ostName" class="form-label">Отчество <span
+                                style="color:var(--slate-light);font-weight:400;">(необязательно)</span></label>
+                        <input type="text" name="ost_name" class="form-control" id="ostName" placeholder="Иванович">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label">Телефон <span
+                                style="color:var(--slate-light);font-weight:400;">(необязательно)</span></label>
+                        <input type="tel" name="phone" class="form-control" id="phone" placeholder="+996 700 000 000">
+                    </div>
+                </div>
+
+                <hr style="border-color:var(--border);margin:1.5rem 0;">
+
+                <div class="mb-3">
+                    <span
+                        style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--slate-light);">Учётная
+                        запись</span>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="username" class="form-label">Имя пользователя</label>
+                        <input type="text" name="username" class="form-control" id="username" placeholder="myname"
+                            autocomplete="username" required>
+                        <div class="form-text" style="font-size:0.78rem;color:var(--slate-light);">
+                            <i class="bi bi-info-circle me-1"></i>Только латиница, цифры и подчёркивание
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com"
+                            autocomplete="email" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password1" class="form-label">Пароль</label>
+                        <input type="password" name="password1" class="form-control" id="password1"
+                            placeholder="••••••••" autocomplete="new-password" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password2" class="form-label">Подтверждение пароля</label>
+                        <input type="password" name="password2" class="form-control" id="password2"
+                            placeholder="••••••••" autocomplete="new-password" required>
+                    </div>
+                </div>
+
+                <hr style="border-color:var(--border);margin:1.5rem 0;">
+
+                <div class="mb-4">
+                    <label for="photo" class="form-label">Фото профиля <span
+                            style="color:var(--slate-light);font-weight:400;">(необязательно)</span></label>
+                    <input type="file" name="photo" class="form-control" id="photo" accept=".jpg,.jpeg,.png">
+                    <div class="form-text" style="font-size:0.78rem;color:var(--slate-light);">
+                        <i class="bi bi-image me-1"></i>Форматы: JPG, JPEG, PNG
+                    </div>
+                </div>
+
+                <button class="btn btn-primary-custom w-100" type="submit" style="padding:0.75rem;">
+                    <i class="bi bi-person-check me-2"></i> Зарегистрироваться
+                </button>
+            </form>
+
+            <hr style="border-color:var(--border);margin:1.5rem 0;">
+
+            <div class="text-center">
+                <p class="mb-2" style="font-size:0.875rem;color:var(--slate-light);">Уже есть учётная запись?</p>
+                <a href="{% url 'login' %}" class="btn btn-outline-custom w-100">Войти</a>
+            </div>
+
+            <div class="text-center mt-3">
+                <a href="{% url 'core' %}" style="font-size:0.825rem;color:var(--slate-light);">
+                    <i class="bi bi-arrow-left me-1"></i> На главную
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

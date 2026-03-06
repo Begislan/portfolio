@@ -1,0 +1,43 @@
+{% extends 'adm/base_admin.html' %}
+
+{% block title %}{{ detail_data.menu }}{% endblock %}
+
+{% block content %}
+<div class="container ">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{{ detail_data.menu }}</h4>
+        </div>
+        <div class="card-body">
+            <div class="">
+                <strong>Пользователь:</strong>
+                <span class="text-muted">{{ detail_data.user }}</span>
+            </div>
+            <div class="">
+                <strong>Меню:</strong>
+                <span class="text-muted">{{ detail_data.menu }}</span>
+            </div>
+            <div class="">
+                <strong>Статус:</strong>
+                <span class="badge {{ detail_data.active|yesno:'bg-success,text-success|bg-danger,text-danger' }}">
+                    {{ detail_data.active|yesno:"Активный|Неактивный" }}
+                </span>
+            </div>
+            <div class="">
+                <strong>Дата создания:</strong>
+                <span class="text-muted">{{ detail_data.create_date }}</span>
+            </div>
+            <div class="">
+                <strong>Дата обновления:</strong>
+                <span class="text-muted">{{ detail_data.update_date }}</span>
+            </div>
+            <hr>
+            <h5 class="">Весь контент</h5>
+            <div class="content border rounded p-3 bg-light">
+                {{ detail_data.content|safe }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

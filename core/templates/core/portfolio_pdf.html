@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: "DejaVu Sans", sans-serif;
+            padding: 8px;
+            margin: 0;
+            font-size: 11px;
+            line-height: 1.2;
+        }
+
+        .user-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            gap: 10px;
+        }
+
+        .user-photo {
+            flex-shrink: 0;
+        }
+
+        .user-content {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 3px;
+        }
+
+        h1 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0;
+            color: #333;
+        }
+
+        .username {
+            color: #666;
+            font-size: 11px;
+        }
+
+        .user-contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            font-size: 10px;
+            color: #444;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .contact-label {
+            color: #777;
+            min-width: 85px;
+        }
+
+        img.photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+
+        .qr-container {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+
+        #qr-code {
+            width: 70px;
+            height: 70px;
+            border: 1px solid #eee;
+            padding: 2px;
+            background: white;
+        }
+
+        .qr-label {
+            font-size: 8px;
+            color: #777;
+            text-align: center;
+            max-width: 75px;
+            line-height: 1.1;
+        }
+
+        .portfolio-title {
+            font-size: 14px;
+            font-weight: bold;
+            border-bottom: 1px solid #cc3d3d;
+            padding-bottom: 2px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .portfolio-content {
+            font-size: 11px;
+            line-height: 1.3;
+            color: #333;
+            text-align: justify;
+        }
+
+        .portfolio-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+            font-size: 9px;
+            color: #777;
+        }
+
+        .update-info {
+            font-style: italic;
+        }
+
+        /* Убираем лишние отступы */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+<!-- Блок с данными пользователя -->
+<div class="user-header">
+    <!-- Фото слева -->
+    <div class="user-photo">
+        {% if user.photo %}
+            <img class="photo" src="{{ user.photo.url }}" alt="Фото">
+        {% else %}
+            <div class="photo"
+                 style="width: 80px; height: 80px; border-radius: 50%; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999; font-size: 9px; border: 1px solid #ddd;">
+                Нет фото
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Информация по середине -->
+    <div class="user-content">
+        <div class="user-info">
+            <div class="user-name-row">
+                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                <span class="username">| {{ user.username }}</span>
+            </div>
+
+            <div class="user-contacts">
+                {% if user.email %}
+                    <div class="contact-item">
+                        <span class="contact-label">Email:</span>
+                        <span>{{ user.email }}</span>
+                    </div>
+                {% endif %}
+
+                {% if user.phone %}
+                    <div class="contact-item">
+                        <span class="contact-label">Телефон:</span>
+                        <span>{{ user.phone }}</span>
+                    </div>
+                {% endif %}
+
+                <div class="contact-item">
+                    <span class="contact-label">Зарегистрирован:</span>
+                    <span>{{ user.date_joined|date:"d.m.Y" }}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR-код справа (генерируется через JS) -->
+        <div class="qr-container">
+            <div id="qr-code">
+                {% if qr_code_base64 %}
+                    <img src="data:image/png;base64,{{ qr_code_base64 }}" style="width:70px;height:70px;">
+                {% else %}
+                    <div style="font-size:8px;color:#666;">QR отсутствует</div>
+                {% endif %}
+            </div>
+            <div class="qr-label">QR-код этого документа</div>
+        </div>
+    </div>
+</div>
+
+<!-- Портфолио -->
+<div class="portfolio-title">{{ change_page.menu }}</div>
+<div class="portfolio-content">{{ change_page.content|safe }}</div>
+<div class="portfolio-footer">
+    <span>Портфолио пользователя</span>
+    <span class="update-info">Обновлено: {{ change_page.create_date }}</span>
+</div>
+
+
+
+</body>
+</html>

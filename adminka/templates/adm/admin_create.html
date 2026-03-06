@@ -1,0 +1,115 @@
+{% extends 'adm/base_admin.html' %}
+
+{% block title %}Создать раздел | Portfolio{% endblock %}
+
+{% block content %}
+
+<!-- Page Header -->
+<div class="page-header">
+    <div class="container">
+        <a href="{% url 'admin_core' %}" class="btn btn-ghost-white btn-sm mb-3">
+            <i class="bi bi-arrow-left"></i> Назад к панели
+        </a>
+        <h1 style="font-size:1.75rem;color:var(--white);margin-bottom:0.25rem;">
+            <i class="bi bi-plus-circle me-2" style="color:var(--gold);"></i>Создать раздел
+        </h1>
+        <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;">Добавьте новый контент в ваше портфолио</p>
+    </div>
+</div>
+
+<div class="container pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="portfolio-glass-card p-4 p-md-5">
+                <span class="card-gold-bar"></span>
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                    <div class="mb-4">
+                        <label for="{{ field.id_for_label }}" class="form-label">
+                            {{ field.label }}
+                            {% if field.field.required %}
+                            <span style="color:#dc2626;margin-left:2px;">*</span>
+                            {% endif %}
+                        </label>
+
+                        {% if field.name == 'content' %}
+                        {{ field }}
+                        {% elif field.name == 'background' %}
+                        <input type="file" name="{{ field.name }}" id="{{ field.id_for_label }}"
+                            class="form-control {% if field.errors %}is-invalid{% endif %}" accept="image/*">
+                        {% else %}
+                        {{ field }}
+                        {% endif %}
+
+                        {% if field.help_text %}
+                        <div class="form-text" style="font-size:0.78rem;color:var(--slate-light);">
+                            <i class="bi bi-info-circle me-1"></i>{{ field.help_text }}
+                        </div>
+                        {% endif %}
+
+                        {% if field.errors %}
+                        <div class="mt-1" style="color:#dc2626;font-size:0.825rem;">
+                            {{ field.errors }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+
+                    <div class="d-flex gap-3 mt-5 pt-4" style="border-top:1px solid var(--border);">
+                        <button type="submit" class="btn btn-primary-custom px-5">
+                            <i class="bi bi-plus-lg me-2"></i> Создать раздел
+                        </button>
+                        <a href="{% url 'admin_core' %}" class="btn btn-outline-custom px-4">
+                            <i class="bi bi-x-lg me-2"></i> Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Ensure form inputs inherit the design system */
+    .portfolio-glass-card form input[type="text"],
+    .portfolio-glass-card form input[type="file"],
+    .portfolio-glass-card form textarea,
+    .portfolio-glass-card form select,
+    .portfolio-glass-card form input[type="checkbox"] {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 0.65rem 0.875rem;
+        font-size: 0.9rem;
+        color: var(--navy);
+        background: var(--white);
+        width: 100%;
+    }
+
+    .portfolio-glass-card form input[type="checkbox"] {
+        width: auto;
+        padding: 0;
+    }
+
+    .portfolio-glass-card form input:focus,
+    .portfolio-glass-card form textarea:focus,
+    .portfolio-glass-card form select:focus {
+        border-color: var(--navy-soft);
+        box-shadow: 0 0 0 3px rgba(44, 74, 110, .1);
+        outline: none;
+    }
+</style>
+
+<script>
+    if (document.getElementById('id_content')) {
+        CKEDITOR.replace('id_content', {
+            toolbar: 'Full',
+            height: 450,
+            width: '100%'
+        });
+    }
+</script>
+
+{% endblock %}

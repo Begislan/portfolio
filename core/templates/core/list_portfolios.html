@@ -1,0 +1,138 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Список портфолио | Portfolio{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <span class="section-badge"
+                    style="border-color:rgba(201,168,76,.4);color:var(--gold-light);">Каталог</span>
+                <h1 class="mt-2 mb-1" style="font-size:2rem;color:var(--white);">Портфолио специалистов</h1>
+                <p class="mb-0" style="color:rgba(255,255,255,0.6);font-size:0.95rem;">Найдите коллег и ознакомьтесь с
+                    их профессиональными достижениями</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pb-5">
+
+    <div class="row justify-content-center mb-5">
+        <div class="col-md-8 col-lg-6">
+            <div class="portfolio-glass-card p-3">
+                <form method="get" action="">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-0">
+                            <i class="bi bi-search" style="color:var(--slate-light);"></i>
+                        </span>
+                        <input type="search" name="q" value="{{ query|default:'' }}" class="form-control border-0 ps-0"
+                            placeholder="Поиск по имени или @username..." style="box-shadow:none;">
+                        <button class="btn btn-primary-custom" type="submit">Найти</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
+        {% for i in page_obj %}
+        <div class="col">
+            <div class="portfolio-glass-card h-100 p-0 overflow-hidden d-flex flex-column">
+
+                <div style="background:var(--navy);padding:1.5rem 1.5rem 0;text-align:center;">
+                    {% if i.user.photo %}
+                    <img src="{{ i.user.photo.url }}" alt="{{ i.user.username }}"
+                        onerror="this.src='https://ui-avatars.com/api/?name={{ i.user.first_name }}+{{ i.user.last_name }}&background=1b2d42&color=fff&size=120';"
+                        style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid rgba(255,255,255,0.15);">
+                    {% else %}
+                    <img src="https://ui-avatars.com/api/?name={{ i.user.first_name }}+{{ i.user.last_name }}&background=1b2d42&color=fff&size=120" alt="{{ i.user.username }}"
+                        style="width:80px;height:80px;object-fit:cover;border-radius:8px;border:2px solid rgba(255,255,255,0.15);">
+                    {% endif %}
+                </div>
+
+                <div class="p-4 flex-grow-1 d-flex flex-column">
+                    <div style="border-left:3px solid var(--gold);padding-left:0.75rem;margin-bottom:1rem;">
+                        <h5 class="fw-700 mb-0" style="font-size:0.95rem;">{{ i.user.first_name }} {{ i.user.last_name }}</h5>
+                        <span style="font-size:0.78rem;color:var(--slate-light);">@{{ i.user.username }}</span>
+                    </div>
+
+                    <div class="mt-auto">
+                        <a href="user/{{ i.user.username }}" class="btn btn-outline-custom w-100 btn-sm">
+                            <i class="bi bi-eye"></i> Посмотреть профиль
+                        </a>
+
+                        {% if user.is_superuser %}
+                        <a href="{% url 'delete_user' i.user.username %}" class="btn btn-sm w-100 mt-2"
+                            style="color:var(--slate-light);border:none;background:none;font-size:0.8rem;"
+                            onclick="return confirm('Удалить пользователя?');">
+                            <i class="bi bi-trash me-1"></i>Удалить
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="portfolio-glass-card p-5 text-center">
+                <i class="bi bi-search display-3 d-block mb-3" style="color:var(--border);"></i>
+                <h4 class="mb-2">Никого не найдено</h4>
+                <p class="text-muted mb-4">Измените параметры поиска или просмотрите полный список.</p>
+                <a href="{% url 'list_portfolios' %}" class="btn btn-primary-custom">
+                    <i class="bi bi-people"></i> Показать всех
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <nav aria-label="Pagination" class="d-flex justify-content-center">
+        <ul class="pagination gap-1">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page=1"
+                    style="border-radius:6px;border:1px solid var(--border);">
+                    <i class="bi bi-chevron-double-left"></i>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.previous_page_number }}"
+                    style="border-radius:6px;border:1px solid var(--border);">
+                    <i class="bi bi-chevron-left"></i>
+                </a>
+            </li>
+            {% endif %}
+
+            <li class="page-item disabled">
+                <span class="page-link fw-bold"
+                    style="border-radius:6px;background:var(--navy);color:white;border-color:var(--navy);padding-left:1.25rem;padding-right:1.25rem;">
+                    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                </span>
+            </li>
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.next_page_number }}"
+                    style="border-radius:6px;border:1px solid var(--border);">
+                    <i class="bi bi-chevron-right"></i>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?q={{ query }}&page={{ page_obj.paginator.num_pages }}"
+                    style="border-radius:6px;border:1px solid var(--border);">
+                    <i class="bi bi-chevron-double-right"></i>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+
+</div>
+{% endblock %}
