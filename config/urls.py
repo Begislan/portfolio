@@ -3,18 +3,17 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views
-from core.sitemaps import PortfolioSitemap
+
 from django.contrib.sitemaps.views import sitemap
 
 
 
-sitemaps = {
-    'articles': PortfolioSitemap,
-}
+
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path("ckeditor/", include("ckeditor_uploader.urls")),
     path('', include('core.urls')),
     # auth
@@ -22,7 +21,6 @@ urlpatterns = [
     # admin
     path('adm/', include('adminka.urls')),
 
-    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
 
 ]

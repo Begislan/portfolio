@@ -2,7 +2,7 @@ port_venv
 .venv
 .idea
 media
-static
+
 env
 db.sqlite3
 
