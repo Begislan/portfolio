@@ -1,32 +1,35 @@
+import logging
 import os
+import environ
 from pathlib import Path
 
-import os
-import logging
+# Инициализация environ
+env = environ.Env(
+    # Указываем типы данных по умолчанию
+    DEBUG=(bool, False)
+)
 
+# Указываем путь к .env файлу
+BASE_DIR = Path(__file__).resolve().parent.parent
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # GLib эскертүүлөрүн системалык деңгээлде өчүрүү
 os.environ['G_MESSAGES_DEBUG'] = 'none'
 # WeasyPrint'тин логиндерин чектөө
 logging.getLogger('weasyprint').setLevel(logging.ERROR)
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-y$bl)nl%(z@$f%en!mjx_l#r)=6xp5p51cufy=dy^gt1a(cw12'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['begiportfolio.pythonanywhere.com', "*"]
+DEBUG = env('DEBUG')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')  # .list() превратит строку в список
 
 # Application definition
 
 INSTALLED_APPS = [
-    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,10 +39,12 @@ INSTALLED_APPS = [
     'accounts',
     'ckeditor',
     'ckeditor_uploader',  # Для поддержки загрузки файлов
+
     'phonenumber_field',
     'core',
     'adminka',
     'django.contrib.sitemaps',
+
     # Optional: re-enable if installed, otherwise manual form styling
     'crispy_forms',
     'crispy_bootstrap5',
@@ -50,6 +55,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -83,10 +89,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db(),  # Автоматически распарсит DATABASE_URL
 }
 
 # Password validation
@@ -129,11 +132,8 @@ STATICFILES_DIRS = [
 ]
 AUTH_USER_MODEL = 'core.CustomUser'
 
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -169,10 +169,7 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-
-
 LOGIN_REDIRECT_URL = 'core'
-
 
 import logging
 
@@ -183,4 +180,50 @@ logging.getLogger('urllib3').setLevel(logging.ERROR)
 
 # Жалпы Python деңгээлинде фильтрлөө
 import warnings
+
 warnings.filterwarnings("ignore", category=UserWarning)
+
+CSRF_TRUSTED_ORIGINS = ['https://myportfolio.oshsu.kg', 'http://myportfolio.oshsu.kg', 'https://*.127.0.0.1']
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+        'simple': {
+            'format': '{levelname} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'ERROR',  # Записываем только ошибки и выше
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'django_debug.log'),
+            'formatter': 'verbose',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+    },
+}
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}

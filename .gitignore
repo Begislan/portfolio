@@ -2,9 +2,9 @@ port_venv
 .venv
 .idea
 media
-config/settings.py
+
 env
-settings.py
+
 db.sqlite3
 
 # Python
