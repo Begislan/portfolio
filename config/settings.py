@@ -26,6 +26,7 @@ ALLOWED_HOSTS = ['begiportfolio.pythonanywhere.com', "*"]
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,12 +36,10 @@ INSTALLED_APPS = [
     'accounts',
     'ckeditor',
     'ckeditor_uploader',  # Для поддержки загрузки файлов
-
     'phonenumber_field',
     'core',
     'adminka',
     'django.contrib.sitemaps',
-    
     # Optional: re-enable if installed, otherwise manual form styling
     'crispy_forms',
     'crispy_bootstrap5',

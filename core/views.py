@@ -98,16 +98,16 @@ def core(request):
     return render(request, 'core/index.html', context)
 
 
-@login_required
+
 def user(request, username):
     """
     Публичный профиль — виден только самому владельцу или администратору.
     """
     profile_user = get_object_or_404(CustomUser, username=username)
 
-    # Проверка доступа
-    if request.user != profile_user and not request.user.is_superuser:
-        return redirect('core')
+    # # Проверка доступа
+    # if request.user != profile_user and not request.user.is_superuser:
+    #     return redirect('core')
 
     portfolios = Portfolio.objects.filter(user=profile_user, active=True)
 
@@ -121,7 +121,7 @@ def user(request, username):
         change_page = portfolios.first()
 
     context = {
-        'user': profile_user,
+        'profile_user': profile_user,
         'portfolios': portfolios,
         'change_page': change_page,
     }

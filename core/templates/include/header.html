@@ -4,7 +4,7 @@
             {% if user.is_authenticated and user.photo %}
                 <img src="{{ user.photo.url }}" alt="{{ user.first_name }}+{{ user.last_name }}" class="rounded-circle" width="32" height="32" style="object-fit:cover;">
             {% else %}
-                <img src="https://ui-avatars.com/api/?name={{ user.username|default:'P' }}&background=0d1b2a&color=fff" alt="avatar" class="rounded-circle" width="32" height="32" style="object-fit:cover;">
+                <i class="bi bi-shield-check text-gold"></i>
             {% endif %}
             <span> {{ user.last_name }} {{ user.first_name }}</span>
         </a>
@@ -13,65 +13,66 @@
             <i class="bi bi-list fs-4 text-navy"></i>
         </button>
 
-{#        <div class="collapse navbar-collapse" id="navbarContent">#}
-{#            <ul class="navbar-nav me-auto mb-2 mb-lg-0">#}
-{#                {% if portfolios %}#}
-{#                    {% for menu in portfolios %}#}
-{#                    <li class="nav-item">#}
-{#                        <a class="nav-link" href="/user/{{ user.username }}/?change_page={{ menu.id }}">#}
-{#                            {{ menu.menu }}#}
-{#                        </a>#}
-{#                    </li>#}
-{#                    {% endfor %}#}
-{#                {% endif %}#}
-{#            </ul>#}
-
+        <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav ms-auto align-items-center gap-2">
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <div class="dropdown">
-                        <a class="account-trigger nav-link d-flex align-items-center gap-1" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-circle"></i>
-                            <span>Аккаунт</span>
-                            <i class="bi bi-chevron-down" style="font-size:0.7rem;opacity:0.5;"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="accountDropdown" style="margin-top:8px; border: none;">
-                            <li>
-                                <span class="dropdown-item disabled small text-muted" style="font-size:0.75rem;">
-                                    {{ user.get_full_name|default:user.username }}
-                                </span>
-                            </li>
-                            <li><hr class="dropdown-divider my-1"></li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'profile' %}">
-                                    <i class="bi bi-person me-2"></i> Мой профиль
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'admin_core' %}">
-                                    <i class="bi bi-grid me-2"></i> Панель управления
-                                </a>
-                            </li>
-                            <li><hr class="dropdown-divider my-1"></li>
-                            <li>
-                                <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
-                                        <i class="bi bi-box-arrow-right me-2"></i> Выйти
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
+
+                <li class="nav-item dropdown d-none d-lg-block">
+                    <a class="account-trigger nav-link d-flex align-items-center gap-1" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-person-circle"></i>
+                        <span>Аккаунт</span>
+                        <i class="bi bi-chevron-down" style="font-size:0.7rem;opacity:0.5;"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="accountDropdown" style="margin-top:8px;">
+                        <li>
+                            <span class="dropdown-item disabled small text-muted" style="font-size:0.75rem;">
+                                {{ user.get_full_name|default:user.username }}
+                            </span>
+                        </li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <li><a class="dropdown-item" href="{% url 'profile' %}"><i class="bi bi-person me-2"></i> Мой профиль</a></li>
+                        <li><a class="dropdown-item" href="{% url 'admin_core' %}"><i class="bi bi-grid me-2"></i> Панель управления</a></li>
+                        <li><hr class="dropdown-divider my-1"></li>
+                        <li>
+                            <form action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item text-danger border-0 bg-transparent w-100 text-start">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Выйти
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
                 </li>
+
+                <div class="d-lg-none w-100 border-top mt-2 pt-2">
+                    <li class="nav-item">
+                        <span class="nav-link disabled text-muted small px-0">
+                             {{ user.get_full_name|default:user.username }}
+                        </span>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-0" href="{% url 'profile' %}">
+                            <i class="bi bi-person me-2"></i> Мой профиль
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link px-0" href="{% url 'admin_core' %}">
+                            <i class="bi bi-grid me-2"></i> Панель управления
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link text-danger border-0 bg-transparent w-100 text-start px-0">
+                                <i class="bi bi-box-arrow-right me-2"></i> Выйти
+                            </button>
+                        </form>
+                    </li>
+                </div>
+
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link text-navy" href="{% url 'login' %}">Войти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-primary-custom" href="{% url 'signup' %}" style="font-size:0.875rem; padding:0.4rem 1rem; border-radius: 8px;">
-                        Регистрация
-                    </a>
+                    <a class="btn btn-primary-custom" href="{% url 'login' %}" style="font-size:0.875rem; padding:0.4rem 1rem; border-radius: 8px;">Войти</a>
                 </li>
                 {% endif %}
             </ul>
@@ -79,3 +80,51 @@
     </div>
 </nav>
 <div style="height: 70px;"></div>
+
+
+<style>
+    /* Стили для выпадающего списка (Desktop) */
+.dropdown-menu-end {
+    right: 0 !important;
+    left: auto !important;
+    background-color: #ffffff !important;
+    border: 1px solid #e0e0e0 !important;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1) !important;
+}
+
+/* Стили для мобильного меню (Раскрывающаяся панель) */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: absolute;
+        right: 15px; /* Отступ от правого края экрана */
+        top: 100%;
+        width: 250px; /* Фиксированная ширина меню */
+        background-color: #ffffff !important; /* Гарантированный белый фон */
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 8px !important;
+        padding: 15px !important;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+        z-index: 1000;
+    }
+
+    .navbar-nav {
+        align-items: flex-end !important; /* Выравнивание текста внутри по правому краю */
+    }
+}
+
+/* Убираем стандартный серый фон Bootstrap */
+.bg-light {
+    background-color: transparent !important;
+}
+
+/* Элементы меню */
+.nav-link, .dropdown-item {
+    color: #111111 !important;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.dropdown-item:hover {
+    background-color: #f4f4f4 !important;
+    color: #33cc66 !important;
+}
+</style>
